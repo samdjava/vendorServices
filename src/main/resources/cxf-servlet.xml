@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <beans>
+
+        <bean id="supplierServiceBean" class="com.sam.target.supplier.service.SupplierServicesImpl"/>
+        <bean id="customerServiceBean" class="com.sam.target.customer.service.CustomerServicesImpl"/>
+
+        <jaxrs:server id="supplierService" address="/supplierService" >
+            <jaxrs:serviceBeans>
+                <ref bean="supplierServiceBean"/>
+            </jaxrs:serviceBeans>
+            <jaxrs:providers>
+                <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+            </jaxrs:providers>
+        </jaxrs:server>
+
+        <jaxrs:server id="customerService" address="/customerService">
+            <jaxrs:serviceBeans>
+                <ref bean="customerServiceBean"/>
+            </jaxrs:serviceBeans>
+            <jaxrs:providers>
+                <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+            </jaxrs:providers>
+        </jaxrs:server>
+
+
+
+    </beans>
+
+</beans>
